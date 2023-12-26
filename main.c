@@ -19,7 +19,7 @@ const char letters[LETTERS_LN] = {
 }; // I could also just write all them in ""s like a string. Dummy
 
 int main(int argc, char *argv[]) {
-  const unsigned int time_opt = 10000000;
+  const unsigned int time_opt = 3000000; // in nanoseconds
 
   // the main program
   initscr();
@@ -49,12 +49,13 @@ int main(int argc, char *argv[]) {
       init_pair(7, COLOR_MAGENTA, COLOR_BLACK),
   };
 
-  const unsigned int count = rand() % 400 + 300;
+  const unsigned int count =
+      rand() % 2000 + 1000; // how many letters will appear
   for (unsigned int i = 0; i < count; ++i) {
     int col_attr = COLOR_PAIR(rand() % COLPAIRS_LN);
     attron(col_attr);
 
-    // NOTE: AI helped this time part
+    // NOTE: AI helped this timing part
     struct timespec sleep_dur = {
         .tv_sec = 0, .tv_nsec = time_opt}; // tv stands for time value
     nanosleep(&sleep_dur,
@@ -66,6 +67,9 @@ int main(int argc, char *argv[]) {
     attroff(col_attr);
   }
 
+  printw(
+      "\n\nThe joy came to an end :( I mean you can restart it if you want :)");
+  refresh();
   getch();
 
   endwin();
